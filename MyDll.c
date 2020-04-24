@@ -4,6 +4,7 @@
 #include <math.h>
 #include "MyDll.h"
 
+
 int asciiBinaryToInt(char *s)
 {
 
@@ -58,52 +59,58 @@ int asciiHEXToInt(char *s)
     return number;
 }
 
-double asciiToDouble(char *s)
-{
-
-    int iSize;
-    double dRes;
-    int iContP = 0, iContS = 0;
-    for (int i = 0; s[i] != '\0'; i++)
-    {
-        iSize = i;
-    }
-    iSize++;
-
-    for (int i = 0; i < iSize; i++)
-    {
-        if ((s[i] > 57 || s[i] < 48) && (s[i] != '+') && (s[i] != '.') && (s[i] != '-'))
-        {
-            printf("Error wrong input 1\n");
-            return -1;
+double asciiToDouble(char *s){
+   
+    double answer = 0.0;
+    int length = strlen(s);
+    int counter= 0;
+    int decimalCounter = 0;
+    bool decimal = false;
+    bool negative = false;
+    int exponent = 0;
+    while(!decimal && decimalCounter < length){
+        if(*s == 46){
+            decimal = true;
         }
-
-        if ((s[i] == '+') || (s[i] == '-'))
-        {
-            if (i != 0)
-            {
-                printf("Error wrong input 2\n");
-                return -1;
-            }
-
-            iContS++;
+        else{
+            decimalCounter++;
         }
-
-        if (s[i] == '.')
-        {
-
-            iContP++;
-        }
+        s++;
     }
-
-    if (iContP >= 2 || iContS >= 2)
-    {
-        printf("Error wrong input 3\n");
-        return -1;
+    for(int counter = decimalCounter; counter >= 0 ; counter--){
+        s--;
     }
-    char *ptr;
-    dRes = strtod(s, &ptr);
-
-    return dRes;
+    exponent = decimalCounter;
+    counter = 0;
+    if(length = decimalCounter){
+        exponent--;
+    }
+    if(*s == 43){
+        exponent--;
+        s++;
+        counter++;
+    }
+    else if(*s == 45){
+        s++;
+        counter++;
+        exponent--;
+        negative = true;
+    }
+    for(counter; counter < decimalCounter; counter++){
+        answer += (*s - 48) * pow(10, exponent);
+        exponent--;
+        s++;
+    }
+    counter = 0;
+    s++;
+    exponent = -1;
+    for(counter = decimalCounter + 1 ; counter < length; counter++){
+        answer += (*s - 48) * pow(10, (exponent));
+        exponent--;
+        s++;
+    }
+    if(negative){
+        answer *= -1;
+    }
+    return answer;
 }
-
