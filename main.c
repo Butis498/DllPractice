@@ -23,7 +23,7 @@ int main(int argc, char const *argv[])
 
     int res = asciiBinaryToInt("1001101");
     int res2 = asciiHEXToInt("23F");
-    double resDouble = asciiToDouble("-4.6");
+    double resDouble = asciiToDouble("+4.6");
 
 
     printf("Numero binario a decimal res = %i\n", res);

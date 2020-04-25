@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include <math.h>
 #include "MyDll.h"
-
+#include<stdlib.h>
 
 int asciiBinaryToInt(char *s)
 {
@@ -59,58 +59,12 @@ int asciiHEXToInt(char *s)
     return number;
 }
 
-double asciiToDouble(char *s){
-   
-    double answer = 0.0;
-    int length = strlen(s);
-    int counter= 0;
-    int decimalCounter = 0;
-    bool decimal = false;
-    bool negative = false;
-    int exponent = 0;
-    while(!decimal && decimalCounter < length){
-        if(*s == 46){
-            decimal = true;
-        }
-        else{
-            decimalCounter++;
-        }
-        s++;
-    }
-    for(int counter = decimalCounter; counter >= 0 ; counter--){
-        s--;
-    }
-    exponent = decimalCounter;
-    counter = 0;
-    if(length = decimalCounter){
-        exponent--;
-    }
-    if(*s == 43){
-        exponent--;
-        s++;
-        counter++;
-    }
-    else if(*s == 45){
-        s++;
-        counter++;
-        exponent--;
-        negative = true;
-    }
-    for(counter; counter < decimalCounter; counter++){
-        answer += (*s - 48) * pow(10, exponent);
-        exponent--;
-        s++;
-    }
-    counter = 0;
-    s++;
-    exponent = -1;
-    for(counter = decimalCounter + 1 ; counter < length; counter++){
-        answer += (*s - 48) * pow(10, (exponent));
-        exponent--;
-        s++;
-    }
-    if(negative){
-        answer *= -1;
-    }
-    return answer;
+float asciiToDouble(char *s)
+{
+    float val;
+    char str[20];
+
+    strcpy(str, s);
+    val = (float)atof(str);
+    return val;
 }
